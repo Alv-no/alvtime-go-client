@@ -5,6 +5,7 @@ services:
     image: alvtime-go-client-devcontainer
     container_name: alvtime-go-client-devcontainer
     user: vscode
+    working_dir: /workspace
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,11 +16,9 @@ services:
     volumes:
       - ..:/workspace
     command: /bin/sh -c "while sleep 1000; do :; done"
-  dotnet-backend:
-    container_name: dotnet-backend
-    image: alvtimewebapi_dotnet-backend-no-auth:latest
-    links:
-      - mssql-db
+  alvtime-web-api-no-auth:
+    container_name: alvtime-web-api-no-auth
+    image: docker.pkg.github.com/alv-no/alvtime-go-client/alvtime-web-api-no-auth:latest
     environment:
       - ConnectionStrings__AlvTime_db=Data Source=tcp:mssql-db,1433;Initial Catalog=AlvDevDB;User ID=sa;Password=AlvTimeTestErMoro32
     networks:
