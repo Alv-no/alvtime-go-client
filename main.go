@@ -8,7 +8,7 @@ import (
 
 func main() {
 	alvtimeClient := AlvtimeClient{
-		domain:     "http://dotnet-backend",
+		domain:     "http://alvtime-web-api-no-auth",
 		httpClient: &http.Client{},
 	}
 
