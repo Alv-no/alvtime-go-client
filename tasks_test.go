@@ -2,20 +2,23 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"testing"
 )
 
-func TestGetTasks(t *testing.T) {
-	alvtimeClient := AlvtimeClient{
-		domain:     "http://dotnet-backend",
+func createTestAlvtimeClient() AlvtimeClient {
+	return AlvtimeClient{
+		domain:     "http://alvtime-web-api-no-auth",
 		httpClient: &http.Client{},
 	}
+}
+
+func TestGetTasks(t *testing.T) {
+	alvtimeClient := createTestAlvtimeClient()
 
 	tasks, err := alvtimeClient.GetTasks()
 	if err != nil {
-		log.Fatalln(err)
+		t.Error(err)
 	}
 
 	length := len(tasks)
