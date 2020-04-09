@@ -26,6 +26,8 @@ services:
       - alvtime-go-client-net
     expose:
       - "80"
+    ports:
+      - "8080:80"
   mssql-db:
     container_name: mssql-db
     image: alvnoas/alvtime-database:latest
