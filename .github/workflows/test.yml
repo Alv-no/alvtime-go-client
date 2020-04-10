@@ -18,5 +18,4 @@ jobs:
       run: |
         docker-compose -f .devcontainer/docker-compose.yaml up -d
         sleep 5
-        docker-compose -f .devcontainer/docker-compose.yaml exec alvtime-go-client-devcontainer go test ./...
-        docker-compose -f .devcontainer/docker-compose.yaml down
+        docker-compose -f .devcontainer/docker-compose.yaml run alvtime-go-client-devcontainer go test ./...
