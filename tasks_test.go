@@ -21,7 +21,7 @@ func TestGetTasks(t *testing.T) {
 	}
 
 	length := len(tasks)
-	if length < 0 {
+	if length <= 0 {
 		t.Errorf("Length of tasks array is %v, not above 0", length)
 	}
 }
