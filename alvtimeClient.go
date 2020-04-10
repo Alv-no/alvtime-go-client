@@ -38,6 +38,10 @@ func (alvtimeClient *AlvtimeClient) do(req *http.Request) ([]byte, error) {
 
 	var byteArr []byte
 	byteArr, err = ioutil.ReadAll(resp.Body)
+    if err != nil {
+        return nil, err
+    }
+
 	resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
@@ -45,8 +49,7 @@ func (alvtimeClient *AlvtimeClient) do(req *http.Request) ([]byte, error) {
 		json.Unmarshal(byteArr, &e)
 		err = errors.New(
 			"\n\tRequest StatusCode: " + strconv.Itoa(resp.StatusCode) +
-				", \n\tCODE: " + e.Code +
-				", \n\tMESSAGE: " + e.Error,
+				", \n\tStatus: " + resp.Status,
 		)
 		return nil, err
 	}
