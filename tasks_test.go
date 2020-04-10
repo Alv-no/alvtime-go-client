@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 	"testing"
 )
@@ -22,39 +21,43 @@ func TestGetTasks(t *testing.T) {
 	}
 
 	length := len(tasks)
-	expected := 17
-	if length != expected {
-		t.Error("Length of tasks array does not match expected")
-		t.Errorf("Fetched tasks array length: %v", length)
-		t.Errorf("Expected tasks array length: %v", expected)
+	if length < 0 {
+		t.Errorf("Length of tasks array is %v, not above 0", length)
+	}
+}
+
+func TestEditFavoriteTasks(t *testing.T) {
+	alvtimeClient := createTestAlvtimeClient()
+
+	tasks, err := alvtimeClient.GetTasks()
+	if err != nil {
+		t.Error(err)
 	}
 
-	task := tasks[5]
-	expectedTask := Task{
-		Id:               6,
-		Name:             "Testradgiver",
-		Description:      "",
-		Favorite:         false,
-		Locked:           false,
-		CompensationRate: 0,
-		Project: Project{
-			Id:   3,
-			Name: "Sklier",
-			Customer: Customer{
-				Id:             2,
-				Name:           "Rutsjebaner AS",
-				InvoiceAddress: "Alvvegen 21",
-				ContactPerson:  "Willy",
-				ContactEmail:   "willy@rutsjebaner.no",
-				ContactPhone:   "53153162",
-			},
-		},
+	var tasksToEdit = []Task{tasks[0], tasks[1]}
+	tasksToEditCopy := make([]Task, len(tasksToEdit))
+	copy(tasksToEditCopy, tasksToEdit)
+	tasksToEdit[0].Favorite = !tasksToEdit[0].Favorite
+	tasksToEdit[1].Favorite = !tasksToEdit[1].Favorite
+
+	editedTasks, err := alvtimeClient.EditFavoriteTasks(tasksToEdit)
+	if err != nil {
+		t.Error(err)
 	}
 
-	if task != expectedTask {
-		indentedTask, _ := json.MarshalIndent(task, "", "    ")
-		indentedExpectedTask, _ := json.MarshalIndent(expectedTask, "", "    ")
-		t.Errorf("Resived: \n%v", string(indentedTask))
-		t.Errorf("Expected: \n%v", string(indentedExpectedTask))
+	length := len(editedTasks)
+	expectedLength := 2
+	if length != expectedLength {
+		t.Errorf("Length of tasks array is %v, not the expected %v", length, expectedLength)
+	}
+
+	for _, taskToEditCopy := range tasksToEditCopy {
+		for _, editedTask := range editedTasks {
+			if taskToEditCopy.Id == editedTask.Id {
+				if taskToEditCopy.Favorite == editedTask.Favorite {
+					t.Errorf("hei")
+				}
+			}
+		}
 	}
 }

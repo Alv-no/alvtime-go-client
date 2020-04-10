@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Login to GitHub Package Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u Alvarbot --password-stdin
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u Alvarbot --password-stdin
 
     - name: Set up environment
       run: docker-compose -f .devcontainer/docker-compose.yaml up -d && sleep 5
