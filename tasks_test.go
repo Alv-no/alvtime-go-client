@@ -1,21 +1,18 @@
 package main
 
 import (
-	"net/http"
 	"testing"
 )
 
-func createTestAlvtimeClient() AlvtimeClient {
-	return AlvtimeClient{
-		domain:     "http://alvtime-web-api-no-auth",
-		httpClient: &http.Client{},
-	}
+func createTestAlvtimeClient() *AlvtimeClient {
+	c, _ := New("http://alvtime-web-api-no-auth")
+	return c
 }
 
 func TestGetTasks(t *testing.T) {
-	alvtimeClient := createTestAlvtimeClient()
+	c := createTestAlvtimeClient()
 
-	tasks, err := alvtimeClient.GetTasks()
+	tasks, err := c.GetTasks()
 	if err != nil {
 		t.Error(err)
 	}
@@ -27,9 +24,9 @@ func TestGetTasks(t *testing.T) {
 }
 
 func TestEditFavoriteTasks(t *testing.T) {
-	alvtimeClient := createTestAlvtimeClient()
+	c := createTestAlvtimeClient()
 
-	tasks, err := alvtimeClient.GetTasks()
+	tasks, err := c.GetTasks()
 	if err != nil {
 		t.Error(err)
 	}
@@ -40,7 +37,7 @@ func TestEditFavoriteTasks(t *testing.T) {
 	tasksToEdit[0].Favorite = !tasksToEdit[0].Favorite
 	tasksToEdit[1].Favorite = !tasksToEdit[1].Favorite
 
-	editedTasks, err := alvtimeClient.EditFavoriteTasks(tasksToEdit)
+	editedTasks, err := c.EditFavoriteTasks(tasksToEdit)
 	if err != nil {
 		t.Error(err)
 	}
@@ -53,7 +50,7 @@ func TestEditFavoriteTasks(t *testing.T) {
 
 	for _, taskToEditCopy := range tasksToEditCopy {
 		for _, editedTask := range editedTasks {
-			if taskToEditCopy.Id == editedTask.Id {
+			if taskToEditCopy.ID == editedTask.ID {
 				if taskToEditCopy.Favorite == editedTask.Favorite {
 					t.Errorf("hei")
 				}
