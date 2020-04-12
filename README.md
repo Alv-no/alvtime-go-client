@@ -1,5 +1,3 @@
-![test](https://github.com/Alv-no/alvtime-go-client/workflows/test/badge.svg?branch=master)
-
 # alvtime-go-client
 
 Alvtime go client
