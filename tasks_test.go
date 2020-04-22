@@ -5,7 +5,9 @@ import (
 )
 
 func createTestAlvtimeClient() *AlvtimeClient {
-	c, _ := New("http://alvtime-web-api-no-auth")
+	testDomain := "http://alvtime-web-api-no-auth"
+	testToken := "5801gj90-jf39-5j30-fjk3-480fj39kl409"
+	c, _ := New(testDomain, testToken)
 	return c
 }
 

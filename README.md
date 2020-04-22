@@ -21,7 +21,7 @@ import (
 )
 
 func main() {
-	c, err := alvtimeClient.New("http://localhost:8080")
+	c, err := alvtimeClient.New("<api-domain>", "<access-token>")
 
 	tasks, err := c.GetTasks()
 	if err != nil {
