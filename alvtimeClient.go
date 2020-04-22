@@ -12,7 +12,8 @@ import (
 
 // AlvtimeClient client struct
 type AlvtimeClient struct {
-	domain string
+	domain      string
+	accessToken string
 	httpClient
 }
 
@@ -26,10 +27,11 @@ type requestError struct {
 }
 
 // New is a helper function to create a *AlvtimeClient based on a domain string
-func New(domain string) (*AlvtimeClient, error) {
+func New(domain, accessToken string) (*AlvtimeClient, error) {
 	c := &AlvtimeClient{
-		domain:     domain,
-		httpClient: &http.Client{},
+		domain:      domain,
+		accessToken: accessToken,
+		httpClient:  &http.Client{},
 	}
 
 	return c, nil
@@ -54,6 +56,8 @@ func (c *AlvtimeClient) newRequest(
     if err != nil {
         return nil, err
     }
+
+    req.Header.Add("Authorization", "Bearer "+c.accessToken)
 
     return req, nil
 }
