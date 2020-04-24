@@ -16,9 +16,9 @@ services:
     volumes:
       - ..:/workspace
     command: /bin/sh -c "while sleep 1000; do :; done"
-  alvtime-web-api-no-auth:
-    container_name: alvtime-web-api-no-auth
-    image: docker.pkg.github.com/alv-no/alvtime-go-client/alvtime-web-api-no-auth:latest
+  alvtime-web-api:
+    container_name: alvtime-web-api
+    image: alvnoas/alvtime-web-api:latest
     environment:
       - ConnectionStrings__AlvTime_db=Data Source=tcp:mssql-db,1433;Initial Catalog=AlvDevDB;User ID=sa;Password=AlvTimeTestErMoro32
     networks:
