@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set up environment
-      run: docker-compose -f .devcontainer/docker-compose.yaml up -d && sleep 5
+      run: docker-compose -f packages/cli/.devcontainer/docker-compose.yaml up -d && sleep 5
 
     - name: Run tests
-      run: docker-compose -f .devcontainer/docker-compose.yaml run alvtime-go-client-devcontainer go test ./...
+      run: docker-compose -f packages/cli/.devcontainer/docker-compose.yaml run alvtime-go-client-devcontainer go test ./.../packages/cli/
